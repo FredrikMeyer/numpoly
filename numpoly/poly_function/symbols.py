@@ -94,5 +94,5 @@ def symbols(names=None, asarray=False, dtype="i8"):
     return numpoly.ndpoly.from_attributes(
         exponents=exponents,
         coefficients=coefficients,
-        indeterminants=names,
+        names=names,
     )

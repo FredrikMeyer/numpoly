@@ -51,4 +51,4 @@ def reshape(a, newshape, order="C"):
     """
     poly = numpoly.aspolynomial(a)
     array = numpy.reshape(poly.values, newshape=newshape, order=order)
-    return numpoly.aspolynomial(array, indeterminants=poly.indeterminants)
+    return numpoly.aspolynomial(array, names=poly.indeterminants)

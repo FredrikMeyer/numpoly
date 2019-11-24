@@ -7,7 +7,7 @@ from .compose import compose_polynomial_array
 
 def polynomial(
         poly_like=None,
-        indeterminants=None,
+        names=None,
         dtype=None,
 ):
     """
@@ -32,7 +32,7 @@ def polynomial(
     Args:
         poly_like (typing.Any):
             Input to be converted to a `numpoly.ndpoly` polynomial type.
-        indeterminants (str, typing.Tuple[str, ...]):
+        names (str, typing.Tuple[str, ...]):
             Name of the indeterminant variables. If possible to infer from
             ``poly_like``, this argument will be ignored.
         dtype (type, numpy.dtype):
@@ -64,7 +64,7 @@ def polynomial(
         poly = numpoly.ndpoly(
             exponents=[(0,)],
             shape=(),
-            indeterminants=indeterminants,
+            names=names,
             dtype=dtype,
         )
         poly["0"] = 0
@@ -75,17 +75,17 @@ def polynomial(
         poly = numpoly.ndpoly.from_attributes(
             exponents=exponents,
             coefficients=coefficients,
-            indeterminants=indeterminants,
+            names=names,
             dtype=dtype,
         )
 
     elif isinstance(poly_like, numpoly.ndpoly):
-        if indeterminants is None:
-            indeterminants = poly_like.names
+        if names is None:
+            names = poly_like.names
         poly = numpoly.ndpoly.from_attributes(
             exponents=poly_like.exponents,
             coefficients=poly_like.coefficients,
-            indeterminants=indeterminants,
+            names=names,
             dtype=dtype,
         )
 
@@ -100,14 +100,14 @@ def polynomial(
         poly = numpoly.ndpoly.from_attributes(
             exponents=exponents,
             coefficients=coefficients,
-            indeterminants=indeterminants,
+            names=names,
         )
 
     elif isinstance(poly_like, (int, float, numpy.ndarray, numpy.generic)):
         poly = numpoly.ndpoly.from_attributes(
             exponents=[(0,)],
             coefficients=numpy.array([poly_like]),
-            indeterminants=indeterminants,
+            names=names,
             dtype=dtype,
         )
 
@@ -117,11 +117,11 @@ def polynomial(
         exponents = poly_like.monoms()
         coefficients = [int(coeff) if coeff.is_integer else float(coeff)
                         for coeff in poly_like.coeffs()]
-        indeterminants = [str(elem) for elem in poly_like.gens]
+        names = [str(elem) for elem in poly_like.gens]
         poly = numpoly.ndpoly.from_attributes(
             exponents=exponents,
             coefficients=coefficients,
-            indeterminants=indeterminants,
+            names=names,
         )
 
     else:

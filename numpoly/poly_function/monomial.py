@@ -5,7 +5,7 @@ import numpy
 import numpoly
 
 
-def monomial(start, stop=None, ordering="G", cross_truncation=1., indeterminants=None):
+def monomial(start, stop=None, ordering="G", cross_truncation=1., names=None):
     """
     Create an polynomial monomial expansion.
 
@@ -22,7 +22,7 @@ def monomial(start, stop=None, ordering="G", cross_truncation=1., indeterminants
         ordering (str):
             The monomial ordering where the letters ``G``, ``I`` and ``R`` can
             be used to set grade, inverse and reverse to the ordering. For
-            ``indeterminants=("x", "y"))`` we get for various values for
+            ``names=("x", "y"))`` we get for various values for
             ``ordering``:
 
             ========  =====================
@@ -37,8 +37,8 @@ def monomial(start, stop=None, ordering="G", cross_truncation=1., indeterminants
         cross_truncation (float):
             Use hyperbolic cross truncation scheme to reduce the number of
             terms in expansion.
-        indeterminants (None, numpoly.ndpoly, str, Tuple[str, ...])
-            The indeterminants used to create the monomials expansion.
+        names (None, numpoly.ndpoly, str, Tuple[str, ...])
+            The indeterminants names used to create the monomials expansion.
 
     Returns:
         (numpoly.ndpoly):
@@ -47,9 +47,9 @@ def monomial(start, stop=None, ordering="G", cross_truncation=1., indeterminants
     Examples:
         >>> print(numpoly.monomial(4))
         [1 q q**2 q**3 q**4]
-        >>> print(numpoly.monomial(4, 4, ordering="GR", indeterminants=("x", "y")))
+        >>> print(numpoly.monomial(4, 4, ordering="GR", names=("x", "y")))
         [x**4 x**3*y x**2*y**2 x*y**3 y**4]
-        >>> print(numpoly.monomial([1, 1], [2, 2], indeterminants=("x", "y")))
+        >>> print(numpoly.monomial([1, 1], [2, 2], names=("x", "y")))
         [x*y x*y**2 x**2*y x**2*y**2]
 
     """
@@ -58,7 +58,7 @@ def monomial(start, stop=None, ordering="G", cross_truncation=1., indeterminants
 
     start = numpy.array(start, dtype=int)
     stop = numpy.array(stop, dtype=int)
-    dimensions = 1 if indeterminants is None else len(indeterminants)
+    dimensions = 1 if names is None else len(names)
     dimensions = max(start.size, stop.size, dimensions)
 
     indices = bindex(
@@ -85,7 +85,7 @@ def monomial(start, stop=None, ordering="G", cross_truncation=1., indeterminants
     poly = numpoly.ndpoly(
         exponents=indices,
         shape=(len(indices),),
-        indeterminants=indeterminants,
+        names=names,
     )
     for coeff, key in zip(
             numpy.eye(len(indices), dtype=int), poly.keys):

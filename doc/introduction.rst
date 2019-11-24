@@ -38,7 +38,7 @@ constructors:
 
 .. code-block:: python
 
-    >>> poly1 = numpoly.monomial(start=0, stop=3, indeterminants=("x", "y"))
+    >>> poly1 = numpoly.monomial(start=0, stop=3, names=("x", "y"))
     >>> poly1
     polynomial([1, y, x, y**2, x*y, x**2, y**3, x*y**2, x**2*y, x**3])
 
