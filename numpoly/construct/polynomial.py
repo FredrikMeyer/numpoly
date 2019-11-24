@@ -24,8 +24,9 @@ def polynomial(
     ``sympy.Poly``      Convert polynomial from ``sympy`` to ``numpoly``,
                         if possible.
     ``Iterable``        Multivariate array construction.
-    structured array    Assumes that the raw polynomial core. Used for
-                        developer convenience.
+    structured array    Assumes that the input are raw polynomial core and can
+                        be used to construct a polynomial without changing the
+                        data. Used for developer convenience.
     ==================  =======================================================
 
     Args:
